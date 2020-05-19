@@ -2,6 +2,40 @@
 
 #[macro_use] extern crate rocket;
 
+// Demo of the simplest route and handler.
+// When a browser does a HTTP GE request to "/"
+// then this handler prints "Hello world".
+//
+#[get("/")]
+fn index() -> &'static str {
+    "Hello world"
+}
+
+// Demo of a dynamic route. This shows how to echo some text.
+//
+// Rocket types raw strings separately from decoded strings.
+//
+// Rocket provides the type RawStr that represents an unsanitized,
+// unvalidated, and undecoded raw string from an HTTP message. 
+// RawStr exists to separate validated string inputs, represented by
+// types such as String, &str, and Cow<str>, from unvalidated inputs, 
+// represented by &RawStr. RawStr also provides helpful methods to 
+// convert the unvalidated string into a validated one.
+//
+// Because &RawStr implements FromParam, it can be used as the type of a 
+// dynamic segment, as in the example above, where the value refers to a 
+// potentially undecoded string. By contrast, a String is guaranteed to 
+// be decoded. Which one you should use depends on whether you want 
+// direct but potentially unsafe access to the string (&RawStr), or safe
+// access to the string at the cost of an allocation (String).
+//
+use rocket::http::RawStr;
+
+#[get("/echo/<text>")]
+fn echo(text: &RawStr) -> String {
+    format!("{}!", text.as_str())
+}
+
 // Rocket makes it easy to serve pages by using "multiple segments".
 // You can match against multiple segments by using <param..> in a 
 // route path. 
@@ -39,22 +73,33 @@ fn pages(path: PathBuf) -> Option<NamedFile> {
 //
 //     use rocket_contrib::serve::StaticFiles;
 //
-// Edit the main fucntion and mount the route:
+// Edit the main function and mount the route:
 //
-//     rocket.mount("/", StaticFiles::from("/files"))
+//     rocket.mount("/files", StaticFiles::from("/var/www/public/"))
+//
+// The `from` function uses an absolute path to a system directory.
+//
+// For this demo, we don't want to use an absolute path; we want to
+// use a relative path based on this demo's cargo manifest directory.
+//
+// The directory path is gettable via a Rust environment variable:
+//
+//     Path::new(env!("CARGO_MANIFEST_DIR"))
+// 
+// For this demo repository, we use a directory `www/files` and put te
+// static files there; note that we could have chosen any directory name.
+//
+// So the path is:
+//
+//     Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files"))
 //
 // See https://api.rocket.rs/v0.4/rocket_contrib/serve/struct.StaticFiles.html
 //
 use rocket_contrib::serve::StaticFiles;
 
-#[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
-}
-
 fn main() {
     rocket::ignite()
     .mount("/", routes![index, pages])
-    .mount("/", StaticFiles::from("/files"))
+    .mount("/files", StaticFiles::from(Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files")))
     .launch();
 }
