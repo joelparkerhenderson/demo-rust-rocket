@@ -8,7 +8,9 @@ This is a demonstration of:
 
 This demo shows how to:
 
-* Configure Rocket by using a Rocket.toml file.
+* Configure Rocket by using a file `Rocket.toml`
+
+* Set the Rocket environment by using a file `.env`
 
 * Create a static route and handler.
 
