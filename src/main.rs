@@ -91,11 +91,34 @@ fn pages(path: PathBuf) -> Option<NamedFile> {
 //
 // So the path is:
 //
-//     Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files"))
+//     Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files"))Path::new(env!("CARGO_MANIFEST_DIR"))
 //
 // See https://api.rocket.rs/v0.4/rocket_contrib/serve/struct.StaticFiles.html
 //
 use rocket_contrib::serve::StaticFiles;
+
+// Cookies
+//
+// Cookies ia built-in request guard: it allows you to get, set, and 
+// remove cookies. Because Cookies is a request guard, an argument of 
+// its type can simply be added to a handler.
+//
+// The code below results in the incoming request's cookies being 
+// accessible from the handler. The example above retrieves a cookie 
+// named "message". Cookies can also be set and removed using the 
+// Cookies guard. The cookies example on GitHub illustrates further
+//  use of the Cookies type to get and set cookies, while the Cookies
+// documentation contains complete usage information.
+
+use rocket::http::Cookies;
+
+#[get("/cookies")]
+fn index(cookies: Cookies) -> Option<String> {
+    cookies.get("message")
+        .map(|value| format!("Message: {}", value))
+}
+
+// Main
 
 fn main() {
     rocket::ignite()
