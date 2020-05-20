@@ -23,3 +23,5 @@ This demo shows how to:
 * Serve static files by using the rocket_contrib crate.
 
 * Read cookies as a built-in request guard.
+
+* Post a form that creates a structure.

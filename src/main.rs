@@ -33,7 +33,7 @@ use rocket::http::RawStr;
 
 #[get("/echo/<text>")]
 fn echo(text: &RawStr) -> String {
-    format!("{}!", text.as_str())
+    format!("{}", text.as_str())
 }
 
 // Rocket makes it easy to serve pages by using "multiple segments".
@@ -53,7 +53,7 @@ fn echo(text: &RawStr) -> String {
 //
 //     #[get("/page/<path..>")]
 //     fn pages(path: PathBuf) { /* ... */ }
-//
+
 use std::path::{Path,PathBuf};
 use rocket::response::NamedFile;
 
@@ -94,7 +94,7 @@ fn pages(path: PathBuf) -> Option<NamedFile> {
 //     Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files"))Path::new(env!("CARGO_MANIFEST_DIR"))
 //
 // See https://api.rocket.rs/v0.4/rocket_contrib/serve/struct.StaticFiles.html
-//
+
 use rocket_contrib::serve::StaticFiles;
 
 // Cookies
@@ -113,16 +113,53 @@ use rocket_contrib::serve::StaticFiles;
 use rocket::http::Cookies;
 
 #[get("/cookies")]
-fn index(cookies: Cookies) -> Option<String> {
+fn cookies(cookies: Cookies) -> Option<String> {
     cookies.get("message")
         .map(|value| format!("Message: {}", value))
+}
+
+// Forms
+//
+// Forms are one of the most common types of data handled in web applications.
+// Suppose your form submission is intended to create a new todo "Task" item;
+// your form has two fields: a "complete" checkbox and "description" text field.
+//
+// The Form type implements the FromData trait as long as its generic parameter
+// implements the FromForm trait. In the example below, we derived the FromForm
+// trait automatically for the Task structure. FromForm can be derived for any
+// structure whose fields implement FromFormValue.
+//
+// If a POST /todo request arrives, then the form data will automatically be 
+// parsed into the Task structure.
+//
+// If the data that arrives isn't of the correct Content-Type, then the request 
+// is forwarded. If the data don't parse or are invalid, then a customizable 400
+// Bad Request or 422 Unprocessable Entity error is returned. 
+//
+// Any forward or failure can be caught by using the Option and Result types.
+
+use rocket::request::Form;
+
+#[derive(FromForm)]
+struct Task {
+   complete: bool,
+   description: String,
+}
+
+#[post("/tasks", data = "<task>")]
+fn create_task(task: Form<Task>) -> String {
+    format!(
+        "Create task with complete:{} description:{}!", 
+        task.complete, 
+        task.description
+    )
 }
 
 // Main
 
 fn main() {
     rocket::ignite()
-    .mount("/", routes![index, pages])
+    .mount("/", routes![index, pages, cookies, create_task])
     .mount("/files", StaticFiles::from(Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files")))
     .launch();
 }
