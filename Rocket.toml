@@ -1,0 +1,61 @@
+# Rocket.toml
+#
+# An optional Rocket.toml file can be used to specify the configuration
+# parameters for each environment. If it is not present, the default
+# configuration parameters are used. Rocket searches for the file starting at
+# the current working directory. If it is not found there, Rocket checks the
+# parent directory. Rocket continues checking parent directories until the root
+# is reached.
+#
+# The file must be a series of TOML tables, at most one for each environment,
+# and an optional "global" table. Each table contains key-value pairs
+# corresponding to configuration parameters for that environment. If a
+# configuration parameter is missing, the default value is used. The following
+# is a complete Rocket.toml file, where every standard configuration parameter
+# is specified with the default value.
+#
+# The workers and secret_key default parameters are computed by Rocket
+# automatically; the values above are not valid TOML syntax. When manually
+# specifying the number of workers, the value should be an integer: 
+#
+#     workers = 10
+#
+# When manually specifying the secret key, the value should a 256-bit base64
+# encoded string. Such a string can be generated using a tool such as
+# openssl: openssl rand -base64 32.
+#
+# The "global" pseudo-environment can be used to set and/or override
+# configuration parameters globally. A parameter defined in a [global] table
+# sets, or overrides if already present, that parameter in every environment.
+# For example, given the following Rocket.toml file, the value of address will
+# be "1.2.3.4" in every environment:
+#
+#    [global]
+#    address = "1.2.3.4"
+
+[development]
+address = "localhost"
+port = 8000
+workers = [number of cpus * 2]
+keep_alive = 5
+log = "normal"
+secret_key = [randomly generated at launch]
+limits = { forms = 32768 }
+
+[staging]
+address = "0.0.0.0"
+port = 8000
+workers = [number of cpus * 2]
+keep_alive = 5
+log = "normal"
+secret_key = [randomly generated at launch]
+limits = { forms = 32768 }
+
+[production]
+address = "0.0.0.0"
+port = 8000
+workers = [number of cpus * 2]
+keep_alive = 5
+log = "critical"
+secret_key = [randomly generated at launch]
+limits = { forms = 32768 }
