@@ -129,10 +129,10 @@ fn cookies(cookies: Cookies) -> Option<String> {
 // trait automatically for the Task structure. FromForm can be derived for any
 // structure whose fields implement FromFormValue.
 //
-// If a POST /todo request arrives, then the form data will automatically be 
+// If a POST /todo request arrives, then the form data will automatically be
 // parsed into the Task structure.
 //
-// If the data that arrives isn't of the correct Content-Type, then the request 
+// If the data that arrives isn't of the correct Content-Type, then the request
 // is forwarded. If the data don't parse or are invalid, then a customizable 400
 // Bad Request or 422 Unprocessable Entity error is returned. 
 //
@@ -146,10 +146,35 @@ struct Task {
    description: String,
 }
 
-#[post("/tasks", data = "<task>")]
-fn create_task(task: Form<Task>) -> String {
+#[post("/create-task-with-form", data = "<task>")]
+fn create_task_with_form(task: Form<Task>) -> String {
     format!(
-        "Create task with complete:{} description:{}!", 
+        "Create task with form... complete:{} description:{}",
+        task.complete, 
+        task.description
+    )
+}
+
+// Rocket's FromForm parsing is strict by default. In other words, A Form<T>
+// will parse successfully from an incoming form only if the form contains the
+// exact set of fields in T. Said another way, a Form<T> will error on missing
+// and/or extra fields. For instance, if an incoming form contains the fields
+// "a", "b", and "c" while T only contains "a" and "c", the form will not parse
+// as Form<T>.
+//
+// Rocket allows you to opt-out of this behavior via the LenientForm data type.
+// A LenientForm<T> will parse successfully from an incoming form as long as the
+// form contains a superset of the fields in T. Said another way, a
+// LenientForm<T> automatically discards extra fields without error. For
+// instance, if an incoming form contains the fields "a", "b", and "c" while T
+// only contains "a" and "c", the form will parse as LenientForm<T>.
+
+use rocket::request::LenientForm;
+
+#[post("/create-task-with-lenient-form", data = "<task>")]
+fn create_task_with_lenient_form(task: LenientForm<Task>) -> String {
+    format!(
+        "Create task with lenient form... complete:{} description:{}",
         task.complete, 
         task.description
     )
@@ -159,7 +184,13 @@ fn create_task(task: Form<Task>) -> String {
 
 fn main() {
     rocket::ignite()
-    .mount("/", routes![index, pages, cookies, create_task])
+    .mount("/", routes![
+        index, 
+        pages, 
+        cookies, 
+        create_task_with_form, 
+        create_task_with_lenient_form
+    ])
     .mount("/files", StaticFiles::from(Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files")))
     .launch();
 }
