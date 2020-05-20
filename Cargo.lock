@@ -200,6 +200,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "hyper-sync-rustls"
+version = "0.3.0-rc.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d1a443a90413a118ac6739e024f6a5180aa3b3f43f7de65f9d388a961cff19b"
+dependencies = [
+ "hyper",
+ "rustls",
+ "webpki",
+ "webpki-roots",
+]
+
+[[package]]
 name = "idna"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -530,13 +542,29 @@ checksum = "6ce8ca76247376ea21cf271af0f95e3f2014596e3e4c7cc04e44ee6242a40ff2"
 dependencies = [
  "cookie",
  "hyper",
+ "hyper-sync-rustls",
  "indexmap",
  "pear",
  "percent-encoding",
+ "rustls",
  "smallvec",
  "state",
  "time",
  "unicode-xid",
+]
+
+[[package]]
+name = "rustls"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b7891791343c75b73ed9a18cadcafd8c8563d11a88ebe2d87f5b8a3182654d9"
+dependencies = [
+ "base64 0.9.3",
+ "log 0.4.8",
+ "ring",
+ "sct",
+ "untrusted",
+ "webpki",
 ]
 
 [[package]]
@@ -558,6 +586,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "93fc1dc3aaa9bfed95e02e6eadabb4baf7e3078b0bd1b4d7b6b0b68378900502"
 dependencies = [
  "winapi-util",
+]
+
+[[package]]
+name = "sct"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cb8f61f9e6eadd062a71c380043d28036304a4706b3c4dd001ff3387ed00745a"
+dependencies = [
+ "ring",
+ "untrusted",
 ]
 
 [[package]]
@@ -708,6 +746,26 @@ dependencies = [
  "same-file",
  "winapi 0.3.8",
  "winapi-util",
+]
+
+[[package]]
+name = "webpki"
+version = "0.18.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "17d7967316d8411ca3b01821ee6c332bde138ba4363becdb492f12e514daa17f"
+dependencies = [
+ "ring",
+ "untrusted",
+]
+
+[[package]]
+name = "webpki-roots"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "85d1f408918fd590908a70d36b7ac388db2edc221470333e4d6e5b598e44cabf"
+dependencies = [
+ "untrusted",
+ "webpki",
 ]
 
 [[package]]

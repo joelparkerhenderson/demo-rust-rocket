@@ -12,6 +12,8 @@ This demo shows how to:
 
 * Set the Rocket environment by using a file `.env`
 
+* Include Transport Layer Security (TLS).
+
 * Create a static route and handler.
 
 * Create a dynamic route and handler.

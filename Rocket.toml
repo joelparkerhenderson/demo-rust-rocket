@@ -30,8 +30,14 @@
 # For example, given the following Rocket.toml file, the value of address will
 # be "1.2.3.4" in every environment:
 #
-#    [global]
-#    address = "1.2.3.4"
+#     [global]
+#     address = "1.2.3.4"
+#
+# If you use Transport Layer Security (TLS) then you can configure it here,
+# or by using environment variables, or in a programmatic ConfigBuilder.
+#
+#     [development]
+#     tls = { certs = "/path/to/certs.pem", key = "/path/to/key.pem" }
 
 [development]
 address = "localhost"
