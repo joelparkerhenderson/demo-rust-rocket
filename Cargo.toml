@@ -18,6 +18,21 @@ categories = ["web-programming"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rocket = { version = "0.4.4", features = ["tls"] }
-rocket_contrib = "*"
-serde = { version = "1.0", features = ["derive"] }
+rocket = { version = "^0.4.4", features = ["tls"] }
+rocket_cors = { version = "^0.5.1", default-features = false }
+serde = { version = "^1.0.103", features = ["derive"] }
+serde_json = "^1.0.44"
+rust-crypto = "^0.2.36"
+chrono = { version = "^0.4.10", features = ["serde"] }
+diesel = { version = "^1.4.3", features = ["postgres", "chrono"] }
+validator = "^0.10.0"
+validator_derive = "^0.10.0"
+slug = "^0.1.4"
+rand = "^0.7.2"
+dotenv = "^0.15.0"
+# jsonwebtoken = "^6.0.1"
+
+[dependencies.rocket_contrib]
+version = "^0.4.2"
+default-features = false
+features = ["json", "diesel_postgres_pool", "serve"]
