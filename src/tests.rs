@@ -3,7 +3,7 @@ use rocket::local::Client;
 use rocket::http::{ContentType, Status};
 
 #[test]
-fn hello_world() {
+fn hello() {
     // Create a client for our Rocket instance. It's fine to use methods
     // like expect and unwrap during testing: we want our tests to panic
     // when something goes wrong.
@@ -16,4 +16,13 @@ fn hello_world() {
     assert_eq!(response.status(), Status::Ok);
     assert_eq!(response.content_type(), Some(ContentType::Plain));
     assert_eq!(response.body_string(), Some("hello world".into()));
+}
+
+#[test]
+fn echo() {
+    let client = Client::new(rocket()).expect("valid rocket instance");
+    let mut response = client.get("/echo/foo").dispatch();
+    assert_eq!(response.status(), Status::Ok);
+    assert_eq!(response.content_type(), Some(ContentType::Plain));
+    assert_eq!(response.body_string(), Some("foo".into()));
 }

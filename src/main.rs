@@ -297,6 +297,7 @@ fn rocket() -> rocket::Rocket {
     rocket::ignite()
     .mount("/", routes![
         hello,
+        echo,
         pages, 
         cookies, 
         create_item1_with_form, 
