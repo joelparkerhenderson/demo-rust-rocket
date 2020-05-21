@@ -121,16 +121,16 @@ fn cookies(cookies: Cookies) -> Option<String> {
 // Forms
 //
 // Forms are one of the most common types of data handled in web applications.
-// Suppose your form submission is intended to create a new todo "Task" item;
+// Suppose your form submission is intended to create a new todo tast "Item";
 // your form has two fields: a "complete" checkbox and "description" text field.
 //
 // The Form type implements the FromData trait as long as its generic parameter
 // implements the FromForm trait. In the example below, we derived the FromForm
-// trait automatically for the Task structure. FromForm can be derived for any
+// trait automatically for the Item structure. FromForm can be derived for any
 // structure whose fields implement FromFormValue.
 //
 // If a POST /todo request arrives, then the form data will automatically be
-// parsed into the Task structure.
+// parsed into the Item structure.
 //
 // If the data that arrives isn't of the correct Content-Type, then the request
 // is forwarded. If the data don't parse or are invalid, then a customizable 400
@@ -141,17 +141,17 @@ fn cookies(cookies: Cookies) -> Option<String> {
 use rocket::request::Form;
 
 #[derive(FromForm)]
-struct Task {
-   complete: bool,
-   description: String,
+struct Item1 {
+    name: String,
+    complete: bool,
 }
 
-#[post("/create-task-with-form", data = "<task>")]
-fn create_task_with_form(task: Form<Task>) -> String {
+#[post("/create-item1-with-form", data = "<item>")]
+fn create_item1_with_form(item: Form<Item1>) -> String {
     format!(
-        "Create task with form... complete:{} description:{}",
-        task.complete, 
-        task.description
+        "Create item1 with form... name:{} complete:{}",
+        item.name,
+        item.complete, 
     )
 }
 
@@ -171,12 +171,12 @@ fn create_task_with_form(task: Form<Task>) -> String {
 
 use rocket::request::LenientForm;
 
-#[post("/create-task-with-lenient-form", data = "<task>")]
-fn create_task_with_lenient_form(task: LenientForm<Task>) -> String {
+#[post("/create-item1-with-lenient-form", data = "<item>")]
+fn create_item1_with_lenient_form(item: LenientForm<Item1>) -> String {
     format!(
-        "Create task with lenient form... complete:{} description:{}",
-        task.complete, 
-        task.description
+        "Create item1 with lenient form... name:{} complete:{}",
+        item.name,
+        item.complete, 
     )
 }
 
@@ -205,17 +205,59 @@ impl<'v> FromFormValue<'v> for StarCount {
 }
 
 #[derive(FromForm)]
-struct Item {
+struct Item2 {
     name: String,
     star_count: StarCount
 }
 
-#[post("/create-item-with-form", data = "<item>")]
-fn create_item_with_form(item: Form<Item>) -> String {
+#[post("/create-item2-with-form", data = "<item>")]
+fn create_item2_with_form(item: Form<Item2>) -> String {
     format!(
-        "Create item with form... name:{} star_count:{:#?}",
+        "Create item2 with form... name:{} star_count:{:#?}",
         item.name,
         item.star_count
+    )
+}
+
+// The FromFormValue trait can be derived for enums with nullary fields.
+//
+// The derive generates an implementation of the FromFormValue trait for the
+// decorated enum. The implementation returns successfully when the form value
+// matches, case insensitively, the stringified version of a variant's name,
+// returning an instance of said variant.
+
+#[derive(FromFormValue)]
+enum MyValue {
+    First,
+    Second,
+    Third,
+}
+
+// JSON
+//
+// Handle JSON data by using the `serde` crate and the Json type from
+// rocket_contrib. The only condition is that the generic type in Json
+// implements the Deserialize trait from Serde. 
+//
+// Add `serde` to `Cargo.toml` and include the feature "derive":
+//
+//     serde = { version = "1.0", features = ["derive"] }
+
+use serde::Deserialize;
+use rocket_contrib::json::Json;
+
+#[derive(Deserialize)]
+struct Item3 {
+    name: String,
+    complete: bool,
+}
+
+#[post("/create-item3-with-json", data = "<item>")]
+fn create_item3_with_json(item: Json<Item3>) -> String {
+    format!(
+        "Create item3 with form... name:{} complete:{} ",
+        item.name,
+        item.complete, 
     )
 }
 
@@ -227,9 +269,10 @@ fn main() {
         index, 
         pages, 
         cookies, 
-        create_task_with_form, 
-        create_task_with_lenient_form,
-        create_item_with_form,
+        create_item1_with_form, 
+        create_item1_with_lenient_form,
+        create_item2_with_form,
+        create_item3_with_json,
     ])
     .mount("/files", StaticFiles::from(Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files")))
     .launch();
