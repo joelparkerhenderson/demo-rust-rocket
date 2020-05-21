@@ -3,6 +3,17 @@ name = "demo_rust_rocket"
 version = "0.1.0"
 authors = ["Joel Parker Henderson <joel@joelparkerhenderson.com>"]
 edition = "2018"
+license = "GPL2"
+homepage = "https://github.com/joelparkerhenderson/demo_rust_rocket"
+repository = "https://github.com/joelparkerhenderson/demo_rust_rocket"
+documentation = "https://github.com/joelparkerhenderson/demo_rust_rocket"
+
+description = """
+Demo of Rust and Rocket.
+"""
+readme = "README.md"
+keywords = ["demo", "rust", "rocket", "web"]
+categories = ["web-programming"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
