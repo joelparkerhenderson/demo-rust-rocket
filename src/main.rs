@@ -213,9 +213,9 @@ struct Item2 {
 #[post("/create-item2-with-form", data = "<item>")]
 fn create_item2_with_form(item: Form<Item2>) -> String {
     format!(
-        "Create item2 with form... name:{} star_count:{:#?}",
+        "Create item2 with form... name:{} star_count:{}",
         item.name,
-        item.star_count
+        item.star_count.0
     )
 }
 

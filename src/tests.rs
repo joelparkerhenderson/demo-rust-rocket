@@ -52,3 +52,15 @@ fn create_item1_with_lenient_form() {
     assert_eq!(response.content_type(), Some(ContentType::Plain));
     assert_eq!(response.body_string(), Some("Create item1 with lenient form... name:alice complete:false".into()));
 }
+
+#[test]
+fn create_item2_with_form() {
+    let client = Client::new(rocket()).expect("rocket");
+    let mut response = client.post("/create-item2-with-form")
+    .header(ContentType::Form)
+    .body(format!("name={}&star_count={}", "alice", 1))
+    .dispatch();
+    assert_eq!(response.status(), Status::Ok);
+    assert_eq!(response.content_type(), Some(ContentType::Plain));
+    assert_eq!(response.body_string(), Some("Create item2 with form... name:alice star_count:1".into()));
+}
