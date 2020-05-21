@@ -77,14 +77,13 @@ fn create_item_with_form_with_validation_with_invalid_data() {
     assert_eq!(response.status(), Status::UnprocessableEntity);
 }
 
-// #[test]
-// fn create_item3_with_json() {
-//     let client = Client::new(rocket()).expect("valid rocket instance");
-//     let mut response = client.post("/create-item3-with-lenient-form")
-//     .body("{name:\"alice\",complete:\"true\"}")
-//     .dispatch();
-//     assert_eq!(response.status(), Status::Ok);
-//     assert_eq!(response.content_type(), Some(ContentType::Plain));
-//     assert_eq!(response.body_string(), Some("Create item1 with form... name:alice complete:false".into()));
-// }
-
+#[test]
+fn create_item_with_json() {
+    let client = Client::new(rocket()).expect("rocket");
+    let mut response = client.post("/create-item3-with-json")
+    .body("{\"name\":\"alice\",\"complete\":true}")
+    .dispatch();
+    assert_eq!(response.status(), Status::Ok);
+    assert_eq!(response.content_type(), Some(ContentType::Plain));
+    assert_eq!(response.body_string(), Some("Create item3 with json... name:alice complete:true".into()));
+}

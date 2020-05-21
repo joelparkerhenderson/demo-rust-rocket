@@ -255,7 +255,7 @@ struct Item3 {
 #[post("/create-item3-with-json", data = "<item>")]
 fn create_item3_with_json(item: Json<Item3>) -> String {
     format!(
-        "Create item3 with form... name:{} complete:{} ",
+        "Create item3 with json... name:{} complete:{}",
         item.name,
         item.complete, 
     )
