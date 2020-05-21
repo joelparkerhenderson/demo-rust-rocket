@@ -1,14 +1,14 @@
 #![feature(proc_macro_hygiene, decl_macro)]
-
 #[macro_use] extern crate rocket;
+#[cfg(test)] mod tests;
 
 // Demo of the simplest route and handler.
 // When a browser does a HTTP GE request to "/"
-// then this handler prints "Hello world".
+// then this handler prints "hello world".
 //
 #[get("/")]
-fn index() -> &'static str {
-    "Hello world"
+fn hello() -> &'static str {
+    "hello world"
 }
 
 // Demo of a dynamic route. This shows how to echo some text.
@@ -261,19 +261,53 @@ fn create_item3_with_json(item: Json<Item3>) -> String {
     )
 }
 
-// Main
+// Streaming
+//
+// Sometimes you want to handle incoming data directly. For example, you might
+// want to stream the incoming data out to a file. Rocket does this via the Data
+// type.
+//
+// The route below accepts any POST request to the /upload path with
+// Content-Type: text/plain The incoming data is streamed out to tmp/upload.txt,
+// and the number of bytes written is returned as a plain text response if the
+// upload succeeds. If the upload fails, an error response is returned. The
+// handler above is complete. It really is that simple! See the GitHub example
+// code for the full crate.
+//
+// Warning: You should always set limits when reading incoming data.
+//
+// To prevent DoS attacks, limit the amount of data you're willing to accept. 
+// The take() reader adapter makes doing this easy:
+//
+//     data.open().take(LIMIT).
+//
+// TODO make the LIMIT work
 
-fn main() {
+use rocket::Data;
+
+#[post("/upload", format = "plain", data = "<data>")]
+fn upload(data: Data) -> Result<String, std::io::Error> {
+    data.stream_to_file("/tmp/upload.txt").map(|n| n.to_string())
+}
+
+// We separate creation of the Rocket instance from launch of the instance.
+// This makes testing easier, less verbose, and less error-prone.
+
+fn rocket() -> rocket::Rocket {
     rocket::ignite()
     .mount("/", routes![
-        index, 
+        hello,
         pages, 
         cookies, 
         create_item1_with_form, 
         create_item1_with_lenient_form,
         create_item2_with_form,
         create_item3_with_json,
+        upload,
     ])
     .mount("/files", StaticFiles::from(Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files")))
-    .launch();
+}
+
+fn main() {
+    rocket().launch();
 }
