@@ -258,13 +258,13 @@ use serde::Deserialize;
 use rocket_contrib::json::Json;
 
 #[derive(Deserialize)]
-struct Item3 {
+struct ItemWithDeserialize {
     name: String,
     done: bool,
 }
 
-#[post("/create-item3-with-json", data = "<item>")]
-fn create_item3_with_json(item: Json<Item3>) -> String {
+#[post("/create-item-with-deserialize-with-json", data = "<item>")]
+fn create_item_with_deserialize_with_json(item: Json<ItemWithDeserialize>) -> String {
     format!(
         "Create item3 with json... name:{} done:{}",
         item.name,
@@ -315,7 +315,7 @@ fn rocket() -> rocket::Rocket {
         create_item1_with_form, 
         create_item1_with_lenient_form,
         create_item_with_star_count_with_form,
-        create_item3_with_json,
+        create_item_with_deserialize_with_json,
         upload,
     ])
     .mount("/files", StaticFiles::from(

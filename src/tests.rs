@@ -139,7 +139,7 @@ fn create_item_with_form_with_validation_with_invalid_data() {
 #[test]
 fn create_item_with_json() {
     let client = Client::new(rocket()).expect("rocket");
-    let mut response = client.post("/create-item3-with-json")
+    let mut response = client.post("/create-item-with-deserialize-with-json")
     .body("{\"name\":\"alice\",\"done\":true}")
     .dispatch();
     assert_eq!(response.status(), Status::Ok);
