@@ -26,3 +26,17 @@ use rocket::Data;
 pub fn upload(data: Data) -> Result<String, std::io::Error> {
     data.stream_to_file("/tmp/upload.txt").map(|n| n.to_string())
 }
+
+// TODO
+// #[cfg(test)]
+
+// use super::super::{rocket};
+// use rocket::local::Client;
+// use rocket::http::{ContentType, Status};
+
+// #[test]
+// fn test_upload() {
+//     let client = Client::new(rocket()).expect("rocket");
+//     //TODO
+// }
+

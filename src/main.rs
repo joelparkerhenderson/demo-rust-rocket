@@ -5,7 +5,6 @@ use rocket_contrib::templates::Template;
 use std::path::Path;
 
 pub mod demos;
-#[cfg(test)] mod tests;
 
 // We separate creation of the Rocket instance from launch of the instance.
 // This makes testing easier, less verbose, and less error-prone.
