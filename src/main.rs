@@ -60,10 +60,10 @@ use rocket::response::NamedFile;
 #[get("/pages/<path..>")]
 fn pages(path: PathBuf) -> Option<NamedFile> {
     NamedFile::open(
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("pages").join(path)
+        Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("www").join("pages").join(path)
     ).ok()
 }
-
 
 // Rocket makes it easy to serve static files. Use the StaticFiles custom 
 // handler from rocket_contrib, which makes it as simple as one line.
@@ -113,12 +113,20 @@ use rocket_contrib::serve::StaticFiles;
 //  use of the Cookies type to get and set cookies, while the Cookies
 // documentation contains complete usage information.
 
-use rocket::http::Cookies;
+use rocket::http::{Cookie,Cookies};
 
-#[get("/cookies")]
-fn cookies(cookies: Cookies) -> Option<String> {
-    cookies.get("message")
-        .map(|value| format!("Message: {}", value))
+#[get("/get-cookie")]
+fn get_cookie(cookies: Cookies) -> Option<String> {
+    cookies.get("alpha").map(|cookie| 
+        format!("Get cookie... name:{} value:{}", cookie.name(), cookie.value()))
+}
+
+#[get("/set-cookie")]
+fn set_cookie(mut cookies: Cookies) -> Option<String> {
+    cookies.add(Cookie::new("alpha", "bravo"));
+    cookies.get("alpha").map(|cookie| 
+        format!("Set cookie... name:{} value:{}", cookie.name(), cookie.value())
+    )
 }
 
 // Forms
@@ -302,14 +310,18 @@ fn rocket() -> rocket::Rocket {
         hello,
         echo,
         pages, 
-        cookies, 
+        get_cookie, 
+        set_cookie, 
         create_item1_with_form, 
         create_item1_with_lenient_form,
         create_item2_with_form,
         create_item3_with_json,
         upload,
     ])
-    .mount("/files", StaticFiles::from(Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("files")))
+    .mount("/files", StaticFiles::from(
+        Path::new(env!("CARGO_MANIFEST_DIR"))
+        .join("www").join("files")
+    ))
 }
 
 fn main() {
