@@ -1,1 +1,1 @@
-This is a demo text file.
+This is a demo file.

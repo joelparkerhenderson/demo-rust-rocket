@@ -33,10 +33,19 @@ fn pages() {
     let mut response = client.get("/pages/demo.html").dispatch();
     assert_eq!(response.status(), Status::Ok);
     assert_eq!(response.content_type(), Some(ContentType::HTML));
-    assert_eq!(response.body_string(), Some("This is a demo web page.\n".into()));
+    assert_eq!(response.body_string(), Some("This is a demo page.\n".into()));
 }
 
-// TODO Add test for files, cookies
+#[test]
+fn files() {
+    let client = Client::new(rocket()).expect("rocket");
+    let mut response = client.get("/files/demo.txt").dispatch();
+    assert_eq!(response.status(), Status::Ok);
+    assert_eq!(response.content_type(), Some(ContentType::Plain));
+    assert_eq!(response.body_string(), Some("This is a demo file.\n".into()));
+}
+
+// TODO Add test for cookies
 
 #[test]
 fn create_item1_with_form() {
