@@ -40,6 +40,9 @@
 #     [development]
 #     tls = { certs = "/path/to/certs.pem", key = "/path/to/key.pem" }
 
+[global]
+template_dir = "www/templates/"
+
 [development]
 address = "localhost"
 port = 8000
