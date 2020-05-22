@@ -65,15 +65,39 @@ fn set_cookie() {
 }
 
 #[test]
+fn create_item1_with_form_with_complete_data() {
+    let complete_data = format!("name={}&done={}", "alice", "true");
+    let client = Client::new(rocket()).expect("rocket");
+    let mut response = client.post("/create-item1-with-form")
+    .header(ContentType::Form)
+    .body(complete_data)
+    .dispatch();
+    assert_eq!(response.status(), Status::Ok);
+    assert_eq!(response.content_type(), Some(ContentType::Plain));
+    assert_eq!(response.body_string(), Some("Create item1 with form... name:alice done:true".into()));
+}
+
+#[test]
+fn create_item1_with_form_with_incomplete_data() {
+    let incomplete_data = format!("done={}", "true");
+    let client = Client::new(rocket()).expect("rocket");
+    let response = client.post("/create-item1-with-form")
+    .header(ContentType::Form)
+    .body(incomplete_data)
+    .dispatch();
+    assert_eq!(response.status(), Status::UnprocessableEntity);
+}
+
+#[test]
 fn create_item1_with_form() {
     let client = Client::new(rocket()).expect("rocket");
     let mut response = client.post("/create-item1-with-form")
     .header(ContentType::Form)
-    .body(format!("name={}&complete={}", "alice", "true"))
+    .body(format!("name={}&done={}", "alice", "true"))
     .dispatch();
     assert_eq!(response.status(), Status::Ok);
     assert_eq!(response.content_type(), Some(ContentType::Plain));
-    assert_eq!(response.body_string(), Some("Create item1 with form... name:alice complete:true".into()));
+    assert_eq!(response.body_string(), Some("Create item1 with form... name:alice done:true".into()));
 }
 
 #[test]
@@ -85,7 +109,7 @@ fn create_item1_with_lenient_form() {
     .dispatch();
     assert_eq!(response.status(), Status::Ok);
     assert_eq!(response.content_type(), Some(ContentType::Plain));
-    assert_eq!(response.body_string(), Some("Create item1 with lenient form... name:alice complete:false".into()));
+    assert_eq!(response.body_string(), Some("Create item1 with lenient form... name:alice done:false".into()));
 }
 
 #[test]
@@ -116,11 +140,11 @@ fn create_item_with_form_with_validation_with_invalid_data() {
 fn create_item_with_json() {
     let client = Client::new(rocket()).expect("rocket");
     let mut response = client.post("/create-item3-with-json")
-    .body("{\"name\":\"alice\",\"complete\":true}")
+    .body("{\"name\":\"alice\",\"done\":true}")
     .dispatch();
     assert_eq!(response.status(), Status::Ok);
     assert_eq!(response.content_type(), Some(ContentType::Plain));
-    assert_eq!(response.body_string(), Some("Create item3 with json... name:alice complete:true".into()));
+    assert_eq!(response.body_string(), Some("Create item3 with json... name:alice done:true".into()));
 }
 
 // TODO Add test for upload

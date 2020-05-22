@@ -133,7 +133,7 @@ fn set_cookie(mut cookies: Cookies) -> Option<String> {
 //
 // Forms are one of the most common types of data handled in web applications.
 // Suppose your form submission is intended to create a new todo tast "Item";
-// your form has two fields: a "complete" checkbox and "description" text field.
+// your form has two fields: a "name" text field and "done" checkbox.
 //
 // The Form type implements the FromData trait as long as its generic parameter
 // implements the FromForm trait. In the example below, we derived the FromForm
@@ -154,15 +154,15 @@ use rocket::request::Form;
 #[derive(FromForm)]
 struct Item1 {
     name: String,
-    complete: bool,
+    done: bool,
 }
 
 #[post("/create-item1-with-form", data = "<item>")]
 fn create_item1_with_form(item: Form<Item1>) -> String {
     format!(
-        "Create item1 with form... name:{} complete:{}",
+        "Create item1 with form... name:{} done:{}",
         item.name,
-        item.complete, 
+        item.done, 
     )
 }
 
@@ -185,9 +185,9 @@ use rocket::request::LenientForm;
 #[post("/create-item1-with-lenient-form", data = "<item>")]
 fn create_item1_with_lenient_form(item: LenientForm<Item1>) -> String {
     format!(
-        "Create item1 with lenient form... name:{} complete:{}",
+        "Create item1 with lenient form... name:{} done:{}",
         item.name,
-        item.complete, 
+        item.done, 
     )
 }
 
@@ -260,15 +260,15 @@ use rocket_contrib::json::Json;
 #[derive(Deserialize)]
 struct Item3 {
     name: String,
-    complete: bool,
+    done: bool,
 }
 
 #[post("/create-item3-with-json", data = "<item>")]
 fn create_item3_with_json(item: Json<Item3>) -> String {
     format!(
-        "Create item3 with json... name:{} complete:{}",
+        "Create item3 with json... name:{} done:{}",
         item.name,
-        item.complete, 
+        item.done, 
     )
 }
 
@@ -282,7 +282,7 @@ fn create_item3_with_json(item: Json<Item3>) -> String {
 // Content-Type: text/plain The incoming data is streamed out to tmp/upload.txt,
 // and the number of bytes written is returned as a plain text response if the
 // upload succeeds. If the upload fails, an error response is returned. The
-// handler above is complete. It really is that simple! See the GitHub example
+// handler above is done. It really is that simple! See the GitHub example
 // code for the full crate.
 //
 // Warning: You should always set limits when reading incoming data.
