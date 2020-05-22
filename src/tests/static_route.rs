@@ -5,7 +5,7 @@ use rocket::http::{ContentType, Status};
 #[test]
 fn hello() {
     let client = Client::new(rocket()).expect("rocket");
-    let mut response = client.get("/").dispatch();
+    let mut response = client.get("/hello").dispatch();
     assert_eq!(response.status(), Status::Ok);
     assert_eq!(response.content_type(), Some(ContentType::Plain));
     assert_eq!(response.body_string(), Some("hello world".into()));
