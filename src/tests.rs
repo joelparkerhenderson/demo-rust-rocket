@@ -27,7 +27,16 @@ fn echo() {
     assert_eq!(response.body_string(), Some("foo".into()));
 }
 
-// TODO add test for pages, files, cookies
+#[test]
+fn pages() {
+    let client = Client::new(rocket()).expect("rocket");
+    let mut response = client.get("/pages/demo.html").dispatch();
+    assert_eq!(response.status(), Status::Ok);
+    assert_eq!(response.content_type(), Some(ContentType::HTML));
+    assert_eq!(response.body_string(), Some("This is a demo web page.\n".into()));
+}
+
+// TODO Add test for files, cookies
 
 #[test]
 fn create_item1_with_form() {
@@ -87,3 +96,5 @@ fn create_item_with_json() {
     assert_eq!(response.content_type(), Some(ContentType::Plain));
     assert_eq!(response.body_string(), Some("Create item3 with json... name:alice complete:true".into()));
 }
+
+// TODO Add test for upload

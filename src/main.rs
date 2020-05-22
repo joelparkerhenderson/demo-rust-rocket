@@ -59,8 +59,11 @@ use rocket::response::NamedFile;
 
 #[get("/pages/<path..>")]
 fn pages(path: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("pages/").join(path)).ok()
+    NamedFile::open(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("www").join("pages").join(path)
+    ).ok()
 }
+
 
 // Rocket makes it easy to serve static files. Use the StaticFiles custom 
 // handler from rocket_contrib, which makes it as simple as one line.
