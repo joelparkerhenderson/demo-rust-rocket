@@ -1,0 +1,11 @@
+pub mod hello;
+pub mod echo;
+pub mod templates;
+pub mod cookies;
+pub mod files;
+pub mod form;
+pub mod form_with_lenient_form;
+pub mod form_with_validation;
+pub mod json;
+pub mod pages;
+pub mod upload;
