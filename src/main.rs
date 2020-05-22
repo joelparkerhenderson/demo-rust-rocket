@@ -216,15 +216,15 @@ impl<'v> FromFormValue<'v> for StarCount {
 }
 
 #[derive(FromForm)]
-struct Item2 {
+struct ItemWithStarCount {
     name: String,
     star_count: StarCount
 }
 
-#[post("/create-item2-with-form", data = "<item>")]
-fn create_item2_with_form(item: Form<Item2>) -> String {
+#[post("/create-item-with-star-count-with-form", data = "<item>")]
+fn create_item_with_star_count_with_form(item: Form<ItemWithStarCount>) -> String {
     format!(
-        "Create item2 with form... name:{} star_count:{}",
+        "Create item-with-star-count with form... name:{} star_count:{}",
         item.name,
         item.star_count.0
     )
@@ -314,7 +314,7 @@ fn rocket() -> rocket::Rocket {
         set_cookie, 
         create_item1_with_form, 
         create_item1_with_lenient_form,
-        create_item2_with_form,
+        create_item_with_star_count_with_form,
         create_item3_with_json,
         upload,
     ])
