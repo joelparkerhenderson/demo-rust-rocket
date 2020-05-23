@@ -1,0 +1,1 @@
+CREATE ROLE demo_rust_rocket WITH LOGIN ENCRYPTED PASSWORD 'secret';
