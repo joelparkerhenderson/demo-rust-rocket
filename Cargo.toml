@@ -18,19 +18,91 @@ categories = ["web-programming"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+# chrono: date-time functions
+
+# Chrono: Date and Time for Rust
+#
+# Chrono currently uses the time crate, such as for Duration.
+# This will change when Chrono is upgraded to use Rust std time.
+chrono = { version = "0.4.10", features = ["serde"] }
+time = "*"
+
+# Diesel: A safe, extensible ORM and Query Builder for Rust.
+#
+#   * chrono: for time data types
+#   * network-address: for IP address data types
+#   * numeric: for numeric data types, such as decimals
+#   * postgres: for PostgreSQL databases
+#   * sqlite: for SQLite databases
+#   * r2d2: for Rust connection pooling optimizations
+#   * serde_json: for JSON data types
+#   * uuid: for UUID data types
+#
+# If the diesel version number changes, be sure to verify that
+# any dependency versions are correct. The crate `bigdecimal`
+# version number must match the diesel `bigdecimal` version.
+#
+diesel = { version = "1.4.4", features = ["chrono", "network-address", "numeric", "postgres", "sqlite", "r2d2", "serde_json", "url", "uuid"] }
+diesel-dynamic-schema = { git = "https://github.com/diesel-rs/diesel-dynamic-schema" }
+
+# dotenv: dotfiles for environment variables
+dotenv = "^0.15.0"
+
+# jsonwebtoken: JSON web token for proving credentials
+# jsonwebtoken = "^6.0.1"
+
+# r2d2: database connection pool
+#
+# Version must match the diesel dependency version
+r2d2 = "^0.8.4"
+r2d2-diesel = "^1.0"
+
+# rand: random number generator
+rand = "^0.7.2"
+
+# rocket: web framework
 rocket = { version = "^0.4.4", features = ["tls"] }
 rocket_cors = { version = "^0.5.1", default-features = false }
-serde = { version = "^1.0.103", features = ["derive"] }
-serde_json = "^1.0.44"
+
+# rust-crypto: rust cryptography
 rust-crypto = "^0.2.36"
-chrono = { version = "^0.4.10", features = ["serde"] }
-diesel = { version = "^1.4.3", features = ["postgres", "chrono"] }
+
+# Serde: a framework for serializing and deserializing Rust data structures.
+# The Serde crate has core APIs, including Serialize and Deserialize traits.
+# Always required for Serde. The "derive" feature is only required when
+# using #[derive(Serialize, Deserialize)] to make Serde work with structs
+# and enums defined in your crate.
+#
+# The `serde_derive` version must match the serde dependency version.
+#
+serde = { version = "^1.0.103", features = ["derive"] }
+serde_derive = "^1.0.103"
+serde_json = "^1.0.44"
+
+# slug: TODO
+slug = "^0.1.4"
+
+# validator: TODO
 validator = "^0.10.0"
 validator_derive = "^0.10.0"
-slug = "^0.1.4"
-rand = "^0.7.2"
-dotenv = "^0.15.0"
-# jsonwebtoken = "^6.0.1"
+
+# uuid: Generate and parse UUIDs.
+#
+# Version must match the diesel dependency version
+#
+#   * v1 - adds the Uuid::new_v1 function and the ability to create a V1 using an implementation of uuid::v1::ClockSequence (usually uuid::v1::Context) and a timestamp from time::timespec.
+#   * v3 - adds the Uuid::new_v3 function and the ability to create a V3 UUID based on the MD5 hash of some data.
+#   * v4 - adds the Uuid::new_v4 function and the ability to randomly generate a Uuid.
+#   * v5 - adds the Uuid::new_v5 function and the ability to create a V5 UUID based on the SHA1 hash of some data.
+#   * serde - adds the ability to serialize and deserialize a Uuid using the serde crate.
+#
+# You need to enable one of the following Cargo features together with v3, v4 or v5 feature if you're targeting wasm32 architecture:
+#
+#   * stdweb - enables support for OsRng on wasm32-unknown-unknown via stdweb combined with cargo-web
+#   * wasm-bindgen - wasm-bindgen enables support for OsRng on wasm32-unknown-unknown via wasm-bindgen
+#
+uuid = { version = "= 0.8.1", features = ["serde", "v1", "v3", "v4", "v5"] }
 
 [dependencies.rocket_contrib]
 version = "^0.4.2"
