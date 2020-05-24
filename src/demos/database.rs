@@ -35,13 +35,13 @@ pub fn get_item(conn: Db, _id: i32) -> String {
 #[cfg(test)]
 mod tests {
 
-    use super::super::rocket;
+    use crate::rocketeer;
     use rocket::local::Client;
     use rocket::http::{ContentType, Status};
 
     #[test]
     fn test_db() {
-        let client = Client::new(rocket()).expect("rocket");
+        let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.get("/db/items/1").dispatch();
         assert_eq!(response.status(), Status::Ok);
         assert_eq!(response.content_type(), Some(ContentType::Plain));

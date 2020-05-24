@@ -29,14 +29,16 @@ pub fn upload(data: Data) -> Result<String, std::io::Error> {
 
 // TODO
 // #[cfg(test)]
+// mod tests {
 
-// use super::super::{rocket};
+// use crate::rocketeer;
 // use rocket::local::Client;
 // use rocket::http::{ContentType, Status};
 
 // #[test]
 // fn test_upload() {
-//     let client = Client::new(rocket()).expect("rocket");
+//     let client = Client::new(rocketeer()).expect("rocketeer");
 //     //TODO
 // }
 
+//}

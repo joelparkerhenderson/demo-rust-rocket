@@ -26,16 +26,19 @@ pub fn echo(text: &RawStr) -> String {
 }
 
 #[cfg(test)]
+mod tests {
 
-use super::super::{rocket};
-use rocket::local::Client;
-use rocket::http::{ContentType, Status};
+    use crate::rocketeer;
+    use rocket::local::Client;
+    use rocket::http::{ContentType, Status};
 
-#[test]
-fn test_echo() {
-    let client = Client::new(rocket()).expect("rocket");
-    let mut response = client.get("/echo/foo").dispatch();
-    assert_eq!(response.status(), Status::Ok);
-    assert_eq!(response.content_type(), Some(ContentType::Plain));
-    assert_eq!(response.body_string(), Some("foo".into()));
+    #[test]
+    fn test_echo() {
+        let client = Client::new(rocketeer()).expect("rocketeer");
+        let mut response = client.get("/echo/foo").dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        assert_eq!(response.content_type(), Some(ContentType::Plain));
+        assert_eq!(response.body_string(), Some("foo".into()));
+    }
+
 }

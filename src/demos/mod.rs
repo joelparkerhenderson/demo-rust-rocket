@@ -10,3 +10,4 @@ pub mod form_with_from_form_value;
 pub mod json;
 pub mod pages;
 pub mod upload;
+pub mod database;
