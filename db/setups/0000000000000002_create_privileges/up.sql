@@ -1,4 +1,4 @@
-GRANT ALL ON DATABASE demo_rust_rocket TO demo_rust_rocket_administrator;
+GRANT ALL ON DATABASE demo_rust_rocket TO demo_rust_rocket;
 
 GRANT CONNECT ON DATABASE demo_rust_rocket TO demo_rust_rocket;
 GRANT USAGE ON SCHEMA public TO demo_rust_rocket;

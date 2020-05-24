@@ -1,1 +1,1 @@
-DROP TABLE text_items;
+DROP TABLE items;
