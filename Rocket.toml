@@ -43,6 +43,11 @@
 [global]
 template_dir = "www/templates/"
 
+# Database example using Diesel and PostgreSQL.
+# The Rocket URL below must match the Diesel URL as set in the file `.env`.
+[global.databases]
+demo_rust_rocket = { url = "postgres://demo_rust_rocket:secret@localhost/demo_rust_rocket", pool_size = 20  }
+
 [development]
 address = "localhost"
 port = 8000

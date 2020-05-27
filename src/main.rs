@@ -44,6 +44,7 @@ fn rocketeer() -> rocket::Rocket {
         demos::form_with_lenient_form::create_item_with_lenient_form,
         demos::form_with_validation::create_item_with_star_count_with_form,
         demos::json::create_item_with_deserialize_with_json,
+        demos::database::get_database_item,
         demos::upload::upload,
         
 
