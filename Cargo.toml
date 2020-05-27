@@ -19,7 +19,8 @@ categories = ["web-programming"]
 
 [dependencies]
 
-# chrono: date-time functions
+# Library for validation of RS256 JWTs.
+alcoholic_jwt = "1.0.0"
 
 # Chrono: Date and Time for Rust
 #

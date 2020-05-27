@@ -1,5 +1,6 @@
 pub mod static_route;
 pub mod dynamic_route;
+pub mod method_route;
 pub mod templates;
 pub mod cookies;
 pub mod static_files;
