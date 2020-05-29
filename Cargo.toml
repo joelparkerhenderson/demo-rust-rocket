@@ -53,6 +53,16 @@ dotenv = "^0.15.0"
 # jsonwebtoken: JSON web token for proving credentials
 # jsonwebtoken = "^6.0.1"
 
+# SQLlite library. 
+# We use this for testing.
+libsqlite3-sys = { version = "*", features = ["bundled"] }
+
+# FFI bindings to OpenSSL.
+openssl-sys = "*"
+
+# Needed for Postgres.
+openssl = "*"
+
 # r2d2: database connection pool
 #
 # Version must match the diesel dependency version
@@ -61,6 +71,25 @@ r2d2-diesel = "^1.0"
 
 # rand: random number generator
 rand = "^0.7.2"
+
+# Reqeust: higher level HTTP client library.
+#
+# Features:
+#
+#   * default-tls (enabled by default): Provides TLS support to connect over HTTPS.
+#   * native-tls: Enables TLS functionality provided by native-tls.
+#   * native-tls-vendored: Enables the vendored feature of native-tls.
+#   * rustls-tls: Enables TLS functionality provided by rustls.
+#   * blocking: Provides the blocking client API.
+#   * cookies: Provides cookie session support.
+#   * gzip: Provides response body gzip decompression.
+#   * brotli: Provides response body brotli decompression.
+#   * json: Provides serialization and deserialization for JSON bodies.
+#   * stream: Adds support for futures::Stream.
+#   * socks: Provides SOCKS5 proxy support.
+#   * trust-dns: Enables a trust-dns async resolver instead of default threadpool using getaddrinfo.
+#
+reqwest = { version = "*", features = ["blocking", "cookies", "default-tls", "json", "stream"] }
 
 # rocket: web framework
 rocket = { version = "^0.4.4", features = ["tls"] }
