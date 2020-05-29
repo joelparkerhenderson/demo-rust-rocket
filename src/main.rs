@@ -4,7 +4,10 @@
 // Rocket contrib and macros
 //#[macro_use] extern crate rocket_contrib; 
 
-// Diesel database: see demos/database.rs
+// Diesel database: see demos/database.rs.
+// The openssl crate comes before the diesel crate
+// because this is what most linkers need to happen.
+extern crate openssl;
 #[macro_use] extern crate diesel;
 
 // Environment variable settings
