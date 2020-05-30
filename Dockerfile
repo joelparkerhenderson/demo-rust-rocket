@@ -48,15 +48,11 @@ RUN mkdir src/
 
 RUN echo "fn main() {println!(\"if you see this, the build broke\")}" > src/main.rs
 
-#TODO move up
-#RUN . ~/.cargo/env && RUSTFLAGS="-C linker=musl-gcc -C target-feature=-crt-static" cargo build --release --target=x86_64-unknown-linux-musl
 RUN . ~/.cargo/env && RUSTFLAGS="-C target-feature=-crt-static" cargo build --release --target=x86_64-unknown-linux-musl
 
 RUN rm -f target/x86_64-unknown-linux-musl/release/deps/demo_rust_rocket*
 
 COPY . .
-
-#RUN . ~/.cargo/env RUSTFLAGS=-Clinker=musl-gcc cargo build --release --target=x86_64-unknown-linux-musl
 
 # ------------------------------------------------------------------------------
 # Final Stage
