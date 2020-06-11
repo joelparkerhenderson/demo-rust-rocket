@@ -251,6 +251,7 @@ dependencies = [
  "diesel-dynamic-schema",
  "dotenv",
  "libsqlite3-sys",
+ "log 0.3.9",
  "openssl",
  "openssl-sys",
  "r2d2",

@@ -57,6 +57,9 @@ dotenv = "^0.15.0"
 # We use this for testing.
 libsqlite3-sys = { version = "*", features = ["bundled"] }
 
+# A lightweight logging facade for Rust.
+log = "*"
+
 # FFI bindings to OpenSSL.
 openssl-sys = "*"
 
