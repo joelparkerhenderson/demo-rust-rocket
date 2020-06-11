@@ -1,2 +1,23 @@
-.env
+### Dot files ###
+
+# Ignore dot files by default, then accept specific files and patterns.
+.*
+!.gitignore
+!.*.gitignore
+!.*[-_.]example
+!.*[-_.]example[-_.]*
+!.*.gpg
+
+### Env files ###
+
+# Ignore env files by default, then accept specific files and patterns.
+env
+env[-_.]*
+!env[-_.]example
+!env[-_.]example[-_.]*
+!env[-_.]gpg
+!env[-_.]*.gpg
+
+### Misc ###
+
 /target
