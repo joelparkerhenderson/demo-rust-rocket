@@ -15,7 +15,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_hello() {
+    fn hello() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.get("/hello").dispatch();
         assert_eq!(response.status(), Status::Ok);

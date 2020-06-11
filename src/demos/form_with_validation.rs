@@ -46,7 +46,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_create_item_with_form_with_validation_with_valid_data() {
+    fn create_item_with_form_with_validation_with_valid_data() {
         const VALID_DATA: i8 = 1;
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.post("/create-item-with-star-count-with-form")
@@ -59,7 +59,7 @@ mod tests {
     }
 
     #[test]
-    fn test_create_item_with_form_with_validation_with_invalid_data() {
+    fn create_item_with_form_with_validation_with_invalid_data() {
         const INVALID_DATA: i8 = 0;
         let client = Client::new(rocketeer()).expect("rocketeer");
         let response = client.post("/create-item-with-star-count-with-form")

@@ -35,7 +35,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_pages() {
+    fn pages() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.get("/pages/demo.html").dispatch();
         assert_eq!(response.status(), Status::Ok);

@@ -33,7 +33,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_echo() {
+    fn echo() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.get("/echo/foo").dispatch();
         assert_eq!(response.status(), Status::Ok);

@@ -36,7 +36,7 @@ pub fn upload(data: Data) -> Result<String, std::io::Error> {
 // use rocket::http::{ContentType, Status};
 
 // #[test]
-// fn test_upload() {
+// fn upload() {
 //     let client = Client::new(rocketeer()).expect("rocketeer");
 //     //TODO
 // }

@@ -49,7 +49,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_files() {
+    fn files() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.get("/files/demo.txt").dispatch();
         assert_eq!(response.status(), Status::Ok);

@@ -35,7 +35,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_get_cookie() {
+    fn get_cookie() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let _ = client.get("/set-cookie").dispatch();
         let mut response = client.get("/get-cookie").dispatch();
@@ -45,7 +45,7 @@ mod tests {
     }
 
     #[test]
-    fn test_set_cookie() {
+    fn set_cookie() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.get("/set-cookie").dispatch();
         assert_eq!(response.status(), Status::Ok);

@@ -48,7 +48,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_get_users() {
+    fn get_users() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.get("/users").dispatch();
         assert_eq!(response.status(), Status::Ok);
@@ -57,7 +57,7 @@ mod tests {
     }
 
     #[test]
-    fn test_get_user() {
+    fn get_user() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.get("/users/1").dispatch();
         assert_eq!(response.status(), Status::Ok);
@@ -66,7 +66,7 @@ mod tests {
     }
 
     #[test]
-    fn test_post_user() {
+    fn post_user() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.post("/users/1").dispatch();
         assert_eq!(response.status(), Status::Ok);
@@ -75,7 +75,7 @@ mod tests {
     }
 
     #[test]
-    fn test_put_user() {
+    fn put_user() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.put("/users/1").dispatch();
         assert_eq!(response.status(), Status::Ok);
@@ -84,7 +84,7 @@ mod tests {
     }
 
     #[test]
-    fn test_patch_user() {
+    fn patch_user() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.patch("/users/1").dispatch();
         assert_eq!(response.status(), Status::Ok);
@@ -93,7 +93,7 @@ mod tests {
     }
 
     #[test]
-    fn test_delete_user() {
+    fn delete_user() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.delete("/users/1").dispatch();
         assert_eq!(response.status(), Status::Ok);
@@ -102,7 +102,7 @@ mod tests {
     }
 
     #[test]
-    fn test_head_users() {
+    fn head_users() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.head("/users").dispatch();
         assert_eq!(response.status(), Status::Ok);
@@ -111,7 +111,7 @@ mod tests {
     }
 
     #[test]
-    fn test_options_users() {
+    fn options_users() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.options("/users").dispatch();
         assert_eq!(response.status(), Status::Ok);

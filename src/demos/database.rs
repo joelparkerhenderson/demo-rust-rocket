@@ -39,7 +39,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_db() {
+    fn db() {
         // This test needs an existing database record with id 1.
         //
         // One way to create the record is via SQL:

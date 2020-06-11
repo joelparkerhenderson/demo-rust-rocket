@@ -43,7 +43,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_create_item_with_form_with_complete_data() {
+    fn create_item_with_form_with_complete_data() {
         let complete_data = format!("name={}&done={}", "alice", "true");
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.post("/create-item-with-form")
@@ -56,7 +56,7 @@ mod tests {
     }
 
     #[test]
-    fn test_create_item_with_form_with_incomplete_data() {
+    fn create_item_with_form_with_incomplete_data() {
         let incomplete_data = format!("done={}", "true");
         let client = Client::new(rocketeer()).expect("rocketeer");
         let response = client.post("/create-item-with-form")

@@ -34,7 +34,7 @@ mod tests {
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn test_create_item_with_json() {
+    fn create_item_with_json() {
         let client = Client::new(rocketeer()).expect("rocketeer");
         let mut response = client.post("/create-item-with-deserialize-with-json")
         .body("{\"name\":\"alice\",\"done\":true}")
