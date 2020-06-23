@@ -14,57 +14,138 @@ Target examples:
 
 ## Target to Linux GNU
 
-```
+Add target:
+
+```sh
 rustup target add x86_64-unknown-linux-gnu
 ```
 
-Then building is:
+Build release:
 
-```
+```sh
 cargo build --release --target=x86_64-unknown-linux-gnu
 ```
 
 
-## Target from macOS to Linux GNU
+## Target to Linux MUSL
 
-macOS needs a cross-platform compiler, such as GCC or MUSL cross:
+Add target:
+
+```sh
+rustup target add x86_64-unknown-linux-musl
+```
+
+Build release:
+
+```sh
+cargo build --release --target=x86_64-unknown-linuux-musl
+```
+
+
+
+## Target from macOS to Linux GNU via GCC
+
+Add:
 
 ```
+rustup target add x86_64-unknown-linux-gnu
+```
+
+Install cross-platform compiler:
+
+```sh
 brew install gcc
 ```
 
-...or...
+Install linker:
+
+```sh
+brew tap SergioBenitez/osxct
+```
+
+Edit `.cargo/config` to use it:
+
+```toml
+[target.x86_64-unknown-linux-gnu]
+linker = "x86_64-unknown-linux-gnu-gcc"
+```
+
+Env:
+
+```sh
+# Linker for the target platform
+# (cc can also be updated using .cargo/config)
+export TARGET_CC="x86_64-unknown-linux-gnu-gcc"
+
+# Library headers to link against
+export TARGET_CFLAGS="-I $(pwd)/usr/include/x86_64-linux-gnu -isystem $(pwd)/usr/include"
+
+# Libraries (shared objects) to link against
+export LD_LIBRARY_PATH="$(pwd)/usr/lib/x86_64-linux-gnu;$(pwd)/lib/x86_64-linux-gnu"
+
+# openssl-sys specific build flags
+export OPENSSL_DIR="$(pwd)/usr/"
+export OPENSSL_LIB_DIR="$(pwd)/usr/lib/x86_64-linux-gnu/"
+```
+
+Build:
+
+```sh
+RUST_BACKTRACE=1 \
+AS=x86_64-unknown-linux-as \
+PKG_CONFIG_ALLOW_CROSS=1 \
+TARGET_CC=clang \
+CFLAGS="-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include" \
+cargo build --target=x86_64-unknown-linux-gnu --release
+```
+
+
+## Target from macOS to Linux MUSL via GCC
+
+Install a Linux MUSL target:
 
 ```
+rustup target add x86_64-unknown-linux-musl
+```
+
+Install cross compiler:
+
+```sh
 brew install FiloSottile/musl-cross/musl-cross
 ```
 
-Then adjust `.cargo/config` to use the compiler:
+Edit `.cargo/config` to use the compiler:
 
-```
-edit .cargo/config
-```
-
-Example configuration:
-
-```
-[target.x86_64-unknown-linux-gnu]
-linker = "gcc"
-runner = "my-emulator"
-rustflags = ["…", "…"]
-
-
-## Target from macOS to Linux MUSL
-
-Edit `.cargo/config` to configure:
-
-```
+```toml
 [target.x86_64-unknown-linux-musl]
 linker = "x86_64-linux-musl-gcc"
 ```
 
-This should instruct Rust, whenever the target is set to --target=x86_64-unknown-linux-musl, to use the executable `x86_64-linux-musl-gcc` to link the compiled objects. But it seems to be the case that if you have any C code compiled by a Rust build script, you also have to set environment variables like TARGET_CC to get it working. So when my code started throwing linking errors, I just ran the following in my shell:
+Set env:
 
+```sh
+# Linker for the target platform
+# (cc can also be updated using .cargo/config)
+export TARGET_CC="x86_64-unknown-linux-musl-gcc"
+
+# Library headers to link against
+export TARGET_CFLAGS="-I $(pwd)/usr/include/x86_64-linux-musl -isystem $(pwd)/usr/include"
+
+# Libraries (shared objects) to link against
+export LD_LIBRARY_PATH="$(pwd)/usr/lib/x86_64-linux-musl;$(pwd)/lib/x86_64-linux-musl"
+
+# openssl-sys specific build flags
+export OPENSSL_DIR="$(pwd)/usr/"
+export OPENSSL_LIB_DIR="$(pwd)/usr/lib/x86_64-linux-musl/"
 ```
-export TARGET_CC=x86_64-linux-musl-gcc
+
+Build:
+
+```sh
+RUST_BACKTRACE=1 \
+AS=x86_64-unknown-linux-as \
+PKG_CONFIG_ALLOW_CROSS=1 \
+TARGET_CC=clang \
+CFLAGS="-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include" \
+cargo build --target=x86_64-unknown-linux-musl --release
 ```
