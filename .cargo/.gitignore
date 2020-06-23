@@ -1,0 +1,7 @@
+.*
+!.gitignore
+!.*.gitignore
+!.*[-_.]example
+!.*[-_.]example[-_.]*
+!.*.gpg
+!.*.pgp
