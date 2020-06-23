@@ -1,0 +1,7 @@
+#!/bin/sh
+rustup default nightly
+rustup update
+cargo update
+cargo build
+cargo test
+
