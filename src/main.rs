@@ -60,10 +60,7 @@ fn rocketeer() -> rocket::Rocket {
         
 
     ])
-    .mount("/files", StaticFiles::from(
-        Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("www").join("files")
-    ))
+    .mount("/files", StaticFiles::from(env!("FILES_DIR")))
 }
 
 fn main() {
