@@ -19,9 +19,6 @@ use rocket_contrib::serve::StaticFiles;
 // Templates: see demos/templates.rs
 use rocket_contrib::templates::Template;
 
-// Paths: see demos/pages.rs
-use std::path::Path;
-
 // Database: see demos/database.rs
 pub mod schema;
 pub mod models;
