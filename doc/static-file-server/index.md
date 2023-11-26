@@ -3,7 +3,7 @@
 Rocket can serve static files via the FileServer custom handler.
 
 See source:
-<../../src/static_file_server.rs>
+[src/static_file_server.rs](../../src/static_file_server.rs)
 
 See Rocket API:
 <https://api.rocket.rs/v0.5/rocket/fs/struct.FileServer.html>

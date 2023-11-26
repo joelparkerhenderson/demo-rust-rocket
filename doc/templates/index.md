@@ -1,8 +1,7 @@
 # Templates
 
 See source:
-<src/demos/templates.rs>
-
+[src/demos/templates.rs](../../src/demos/templates.rs)
 
 Rocket includes built-in templating support that works largely through a
 Template responder. To render a template named "index", for instance, you

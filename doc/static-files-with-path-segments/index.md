@@ -1,7 +1,7 @@
 # Static files with path segments
 
 See source:
-<../../src/demos/static_files_with_path_segments.rs>
+[src/demos/static_files_with_path_segments.rs](../../src/demos/static_files_with_path_segments.rs)
 
 
 ## Create directory and files

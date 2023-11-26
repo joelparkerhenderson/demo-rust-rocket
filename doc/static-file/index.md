@@ -1,7 +1,7 @@
 # Static file
 
 See source:
-<../../src/demos/static_file.rs>.
+[src/demos/static_file.rs](../../src/demos/static_file.rs)
 
 See Rocket API:
 <https://api.rocket.rs/v0.5/rocket/fs/struct.NamedFile.html>.

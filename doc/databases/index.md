@@ -3,7 +3,7 @@ Databases
 Rocket includes built-in, ORM-agnostic support for databases.
 
 See source:
-<src/demos/database.rs>
+[src/demos/databases.rs](../../src/demos/databases.rs)
 
 See Rocket API:
 <https://rocket.rs/v0.5/guide/state/#databases>

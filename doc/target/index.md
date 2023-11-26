@@ -1,6 +1,5 @@
 # Target help
 
-
 Rust not having a runtime means that it doesn't have a lot of code running as part of the language (for example a garbage collector or bytecode interpreter). It does still need to use operating system primitives (i.e. syscalls), and these are different on MacOS and Linux.
 
 What you want is a cross compiler. If you're using rustup, then installing a cross compiler should be simple.

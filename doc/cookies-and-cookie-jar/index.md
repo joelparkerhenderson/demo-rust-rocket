@@ -1,7 +1,7 @@
 # Cookies and CookieJar
 
 See source: 
-<src/demos/cookies.rs>
+[src/demos/cookies.rs](../../src/demos/cookies.rs)
 
 See Rocket API:
 <https://api.rocket.rs/v0.5/rocket/http/struct.CookieJar.html>

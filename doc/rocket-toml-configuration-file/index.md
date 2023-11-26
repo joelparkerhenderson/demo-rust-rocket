@@ -3,7 +3,7 @@
 `Rocket.toml` is an optional file that can configure parameters for each environment. 
 
 See source: 
-<../Rocket.toml>
+[Rocket.toml](../../Rocket.toml)
 
 See Rocket API: 
 <https://api.rocket.rs/v0.5/rocket/struct.Config.html>

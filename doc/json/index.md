@@ -1,7 +1,7 @@
 # JSON
 
-Source:
-<src/demos/json.rs>
+See source:
+[src/demos/json.rs](../../src/demos/json.rs)
 
 Rocket makes it easy to handle JSON data by using the `serde` crate and the
 Rocket Json type. The only condition is that the generic type in Json
