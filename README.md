@@ -289,9 +289,6 @@ serde = { version = "1.0", features = ["derive"] }
 ```
 
 
-## Create more demos
-
-
 ## Documentation
 
 Setup:
