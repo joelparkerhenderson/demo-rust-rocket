@@ -6,6 +6,24 @@ This is a demonstration of:
 
 * The Rocket 0.5 web framework
 
+This demo is a quick start of the most-important areas for the projects we build:
+  
+* Setup with Rocket.toml, .env.example, and .gitignore
+
+* Static file responses per file, and with path segments, and with a file server.
+
+* HTTP REST method routes for GET, PUT, POST, PATCH, HEAD, OPTIONS.
+
+* JSON request and response.
+
+* SQLite databases with sqlx and the new Rocket database connection pool.
+
+* Templates with Tera.
+
+* Cookies and the new Rocket Cookie Jar.
+  
+* Testing with system tests.
+  
 
 ## Create app
 
