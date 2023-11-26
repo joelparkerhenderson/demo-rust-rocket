@@ -32,20 +32,34 @@ pub fn create_item_with_lenient_form(item: LenientForm<Item>) -> String {
 #[cfg(test)]
 mod tests {
 
-    use crate::rocketeer;
-    use rocket::local::Client;
+    use crate::rocket;
+    use rocket::local::blocking::Client;
     use rocket::http::{ContentType, Status};
 
     #[test]
-    fn create_item_with_lenient_form() {
-        let client = Client::new(rocketeer()).expect("rocketeer");
-        let mut response = client.post("/create-item-with-lenient-form")
+    fn create_item_with_lenient_form_with_incomplete_data() {
+        let incomplete_data: String = format!("name={}", "alice");
+        let client = Client::tracked(rocket()).expect("rocket");
+        let response = client.post("/create-item-with-lenient-form")
         .header(ContentType::Form)
-        .body(format!("name={}", "alice"))
+        .body(incomplete_data)
         .dispatch();
         assert_eq!(response.status(), Status::Ok);
         assert_eq!(response.content_type(), Some(ContentType::Plain));
-        assert_eq!(response.body_string(), Some("Create item with lenient form... name:alice done:false".into()));
+        assert_eq!(response.into_string(), Some("Create item with lenient form... name:alice done:false".into()));
+    }
+
+    #[test]
+    fn create_item_with_lenient_form_with_extra_data() {
+        let extra_data: String = format!("name={}&foo={}", "alice", "goo");
+        let client = Client::tracked(rocket()).expect("rocket");
+        let response = client.post("/create-item-with-lenient-form")
+        .header(ContentType::Form)
+        .body(extra_data)
+        .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        assert_eq!(response.content_type(), Some(ContentType::Plain));
+        assert_eq!(response.into_string(), Some("Create item with lenient form... name:alice done:false".into()));
     }
 
 }

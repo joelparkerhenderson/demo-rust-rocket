@@ -1,65 +1,91 @@
-#![feature(proc_macro_hygiene, decl_macro)]
 #[macro_use] extern crate rocket;
 
-// Rocket contrib and macros
-//#[macro_use] extern crate rocket_contrib; 
+use rocket::{Build, Rocket};
 
-// Diesel database: see demos/database.rs.
+// For src/demos/static_files_with_a_file_server.rs
+
+use rocket::fs::FileServer;
+use std::path::Path;
+
+// For src/demos/templates.rs
+
+use rocket_dyn_templates::Template;
+
+// For src/demos/databases.rs
+
+use rocket_db_pools::Database;
+use rocket_db_pools::sqlx;
+
+#[derive(Database)]
+#[database("demo_rust_rocket_sqlite")]
+pub struct DemoRustRocketSqliteConnection(sqlx::SqlitePool);
+
+// For Diesel database
+//
 // The openssl crate comes before the diesel crate
 // because this is what most linkers need to happen.
-extern crate openssl;
-#[macro_use] extern crate diesel;
 
-// Environment variable settings
-extern crate dotenv;
+//extern crate openssl;
+//#[macro_use] extern crate diesel;
 
-// Stactic files: see demos/static_files.rs
-use rocket_contrib::serve::StaticFiles;
+// For environment variable settings
 
-// Templates: see demos/templates.rs
-use rocket_contrib::templates::Template;
+//extern crate dotenv;
 
-// Database: see demos/database.rs
-pub mod schema;
-pub mod models;
+// Modules
 
-// Load the demos
 pub mod demos;
 
 // We separate creation of the Rocket instance from launch of the instance.
-// This makes testing easier, less verbose, and less error-prone.
+// This makes testing easier, clearer, and more reliable.
 
-fn rocketeer() -> rocket::Rocket {
-    rocket::ignite()
-    .attach(Template::fairing())
-    .attach(demos::database::Db::fairing())
+
+fn rocket() -> Rocket<Build> {
+    rocket::build()
+    .attach(
+        Template::fairing())
+    .attach(
+        DemoRustRocketSqliteConnection::init()
+    )
     .mount("/", routes![
+        demos::index::handler,
         demos::static_route::hello,
         demos::dynamic_route::echo,
-        demos::method_route::get_users,
-        demos::method_route::get_user,
-        demos::method_route::post_user,
-        demos::method_route::put_user,
-        demos::method_route::patch_user,
-        demos::method_route::delete_user,
-        demos::method_route::head_users,
-        demos::method_route::options_users,
-        demos::pages::pages,
+        demos::method_routes::get_users,
+        demos::method_routes::get_user,
+        demos::method_routes::post_user,
+        demos::method_routes::put_user,
+        demos::method_routes::patch_user,
+        demos::method_routes::delete_user,
+        demos::method_routes::head_users,
+        demos::method_routes::options_users,
+        demos::form::create_item_with_form,
+        //demos::form_with_lenient_form::create_item_with_lenient_form,
+        //demos::form_with_validation::create_item_with_star_count_with_form,
+        demos::static_file::get,
+        demos::static_files_with_path_segments::get,
         demos::templates::hello_with_template,
         demos::cookies::get_cookie, 
         demos::cookies::set_cookie, 
-        demos::form::create_item_with_form, 
-        demos::form_with_lenient_form::create_item_with_lenient_form,
-        demos::form_with_validation::create_item_with_star_count_with_form,
-        demos::json::create_item_with_deserialize_with_json,
-        demos::database::get_database_item,
-        demos::upload::upload,
-        
-
+        demos::json::create_item_with_json,
+        demos::databases::get_item,
+        demos::upload::upload,        
     ])
-    .mount("/files", StaticFiles::from(env!("FILES_DIR")))
+    .mount(
+        "/static-files-with-a-file-server", 
+        FileServer::from(
+            Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("www")
+            .join("static-files-with-a-file-server")
+        )
+    )
 }
 
-fn main() {
-    rocketeer().launch();
+#[rocket::main]
+async fn main() -> Result<(), rocket::Error> {
+    let _rocket = rocket()
+        .ignite().await?
+        .launch().await?;
+
+    Ok(())
 }

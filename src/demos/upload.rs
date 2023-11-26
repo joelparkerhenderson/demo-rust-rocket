@@ -20,11 +20,12 @@
 //
 // TODO make the LIMIT work
 
-use rocket::Data;
+use rocket::data::{Data, ToByteUnit};
 
 #[post("/upload", format = "plain", data = "<data>")]
-pub fn upload(data: Data) -> Result<String, std::io::Error> {
-    data.stream_to_file("/tmp/upload.txt").map(|n| n.to_string())
+pub async fn upload(data: Data<'_>) -> std::io::Result<String> {
+    data.open(1.megabytes()).into_file("/tmp/upload.txt").await?;
+    Ok(String::from("Uploaded"))
 }
 
 // TODO

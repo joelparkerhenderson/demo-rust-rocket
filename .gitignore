@@ -20,6 +20,6 @@ env[-_.]*
 !env[-_.]gpg
 !env[-_.]*.gpg
 
-### Misc ###
+### Rust-specific ###
 
 /target

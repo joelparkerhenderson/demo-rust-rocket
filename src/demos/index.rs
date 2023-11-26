@@ -1,9 +1,9 @@
 // Demo of an index route handler, a unit test, and client test.
-// When a browser client does a typical HTTP GET request to "/hello"
+// When a browser client does a typical HTTP GET request to "/"
 // then this handler responds with the text "Hello, world!".
 
-#[get("/hello")]
-pub fn hello() -> &'static str {
+#[get("/")]
+pub fn handler() -> &'static str {
     "Hello, world!"
 }
 
@@ -16,13 +16,13 @@ mod tests {
 
     #[test]
     fn unit() {
-        assert_eq!(super::hello(), "Hello, world!");
+        assert_eq!(super::handler(), "Hello, world!");
     }
 
     #[test]
     fn client() {
         let client = Client::tracked(rocket()).expect("rocket");
-        let response = client.get("/hello").dispatch();
+        let response = client.get("/").dispatch();
         assert_eq!(response.status(), Status::Ok);
         assert_eq!(response.content_type(), Some(ContentType::Plain));
         assert_eq!(response.into_string(), Some("Hello, world!".into()));

@@ -1,33 +1,58 @@
 [package]
-name = "demo_rust_rocket"
-version = "0.1.0"
+name = "demo-rust-rocket"
+version = "1.0.0"
+edition = "2021"
 authors = ["Joel Parker Henderson <joel@joelparkerhenderson.com>"]
-edition = "2018"
-license = "GPL2"
-homepage = "https://github.com/joelparkerhenderson/demo_rust_rocket"
-repository = "https://github.com/joelparkerhenderson/demo_rust_rocket"
-documentation = "https://github.com/joelparkerhenderson/demo_rust_rocket"
+license = "GPL-2.0 OR GPL-3.0"
+homepage = "https://github.com/joelparkerhenderson/demo-rust-rocket"
+repository = "https://github.com/joelparkerhenderson/demo-rust-rocket"
+documentation = "https://github.com/joelparkerhenderson/demo-rust-rocket"
 
 description = """
 Demo of Rust and Rocket.
 """
+
 readme = "README.md"
 keywords = ["demo", "rust", "rocket", "web"]
 categories = ["web-programming"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 
+### Dependencies for this demo_rust_rocket program
+
+rocket = { version = "0.5.0", features = ["http2", "json", "msgpack", "uuid", "secrets", "tls", "mtls"] }
+rocket_dyn_templates = { version = "0.1.0", features = ["handlebars", "tera"] }
+rocket_sync_db_pools = "*"
+rocket_db_pools = { version = "0.1.0", features = ["sqlx_sqlite"] }
+
+# Serde: a framework for serializing and deserializing Rust data structures. 
+# The Serde crate has core APIs, including Serialize and Deserialize traits. 
+#
+# The "derive" feature is only required when using #[derive(Serialize, Deserialize)]
+# to make Serde work with structs and enums defined in your crate.
+#
+# The `serde_derive` version must match the serde dependency version.
+# In practice, all the serde-related crates must match the same version,
+# so it is prudent to define each version to be greater-than a version,
+# or even better, to pin to specific versions.
+#
+serde = { version = "^1.0.103", features = ["derive"] }
+serde_derive = "^1.0.103"
+serde_json = "^1.0.44"
+
+### Other dependencies that we like to use with many of our Rocket programs
+
 # Library for validation of RS256 JWTs.
-alcoholic_jwt = "1.0.0"
+#
+#alcoholic_jwt = "1.0.0"
 
 # Chrono: Date and Time for Rust
 #
 # Chrono currently uses the time crate, such as for Duration.
 # This will change when Chrono is upgraded to use Rust std time.
-chrono = { version = "0.4.10", features = ["serde"] }
-time = "*"
+#
+#chrono = { version = "0.4.10", features = ["serde"] }
+#time = "*"
 
 # Diesel: A safe, extensible ORM and Query Builder for Rust.
 #
@@ -44,36 +69,44 @@ time = "*"
 # any dependency versions are correct. The crate `bigdecimal`
 # version number must match the diesel `bigdecimal` version.
 #
-diesel = { version = "1.4.4", features = ["chrono", "network-address", "numeric", "postgres", "sqlite", "r2d2", "serde_json", "url", "uuid"] }
-diesel-dynamic-schema = { git = "https://github.com/diesel-rs/diesel-dynamic-schema" }
+#diesel = { version = "1.4.4", features = ["chrono", "network-address", "numeric", "postgres", "sqlite", "r2d2", "serde_json", "url", "uuid"] }
+#diesel-dynamic-schema = { git = "https://github.com/diesel-rs/diesel-dynamic-schema" }
 
 # dotenv: dotfiles for environment variables
-dotenv = "^0.15.0"
+#
+#dotenv = "^0.15.0"
 
 # jsonwebtoken: JSON web token for proving credentials
+#
 # jsonwebtoken = "^6.0.1"
 
 # SQLlite library. 
 # We use this for testing.
-libsqlite3-sys = { version = "*", features = ["bundled"] }
+#
+#libsqlite3-sys = { version = "*", features = ["bundled"] }
 
 # A lightweight logging facade for Rust.
-log = "*"
+#
+#log = "*"
 
 # FFI bindings to OpenSSL.
-openssl-sys = "*"
+#
+#openssl-sys = "*"
 
 # Needed for Postgres.
-openssl = "*"
+#
+#openssl = "*"
 
 # r2d2: database connection pool
 #
 # Version must match the diesel dependency version
-r2d2 = "^0.8.4"
-r2d2-diesel = "^1.0"
+#
+#r2d2 = "^0.8.4"
+#r2d2-diesel = "^1.0"
 
 # rand: random number generator
-rand = "^0.7.2"
+#
+#rand = "^0.7.2"
 
 # Reqeust: higher level HTTP client library.
 #
@@ -92,33 +125,20 @@ rand = "^0.7.2"
 #   * socks: Provides SOCKS5 proxy support.
 #   * trust-dns: Enables a trust-dns async resolver instead of default threadpool using getaddrinfo.
 #
-reqwest = { version = "*", features = ["blocking", "cookies", "default-tls", "json", "stream"] }
+#reqwest = { version = "*", features = ["blocking", "cookies", "default-tls", "json", "stream"] }
 
 # rocket: web framework
-rocket = { version = "^0.4.4", features = ["tls"] }
-rocket_cors = { version = "^0.5.1", default-features = false }
+#rocket_cors = { version = "^0.5.1", default-features = false }
 
 # rust-crypto: rust cryptography
-rust-crypto = "^0.2.36"
-
-# Serde: a framework for serializing and deserializing Rust data structures.
-# The Serde crate has core APIs, including Serialize and Deserialize traits.
-# Always required for Serde. The "derive" feature is only required when
-# using #[derive(Serialize, Deserialize)] to make Serde work with structs
-# and enums defined in your crate.
-#
-# The `serde_derive` version must match the serde dependency version.
-#
-serde = { version = "^1.0.103", features = ["derive"] }
-serde_derive = "^1.0.103"
-serde_json = "^1.0.44"
+#rust-crypto = "^0.2.36"
 
 # slug: TODO
-slug = "^0.1.4"
+#slug = "^0.1.4"
 
 # validator: TODO
-validator = "^0.10.0"
-validator_derive = "^0.10.0"
+#validator = "^0.10.0"
+#validator_derive = "^0.10.0"
 
 # uuid: Generate and parse UUIDs.
 #
@@ -135,9 +155,4 @@ validator_derive = "^0.10.0"
 #   * stdweb - enables support for OsRng on wasm32-unknown-unknown via stdweb combined with cargo-web
 #   * wasm-bindgen - wasm-bindgen enables support for OsRng on wasm32-unknown-unknown via wasm-bindgen
 #
-uuid = { version = "= 0.8.1", features = ["serde", "v1", "v3", "v4", "v5"] }
-
-[dependencies.rocket_contrib]
-version = "^0.4.2"
-default-features = false
-features = ["json", "diesel_postgres_pool", "serve", "tera_templates"]
+#uuid = { version = "= 0.8.1", features = ["serde", "v1", "v3", "v4", "v5"] }

@@ -1,7 +1,7 @@
 // Forms
 //
 // Forms are one of the most common types of data handled in web applications.
-// Suppose your form submission is intended to create a new todo tast "Item";
+// Suppose your form submission is intended to create a new todo task "Item";
 // your form has two fields: a "name" text field and "done" checkbox.
 //
 // The Form type implements the FromData trait as long as its generic parameter
@@ -18,7 +18,7 @@
 //
 // Any forward or failure can be caught by using the Option and Result types.
 
-use rocket::request::Form;
+use rocket::form::Form;
 
 #[derive(FromForm)]
 pub struct Item {
@@ -38,27 +38,27 @@ pub fn create_item_with_form(item: Form<Item>) -> String {
 #[cfg(test)]
 mod tests {
 
-    use crate::rocketeer;
-    use rocket::local::Client;
+    use crate::rocket;
+    use rocket::local::blocking::Client;
     use rocket::http::{ContentType, Status};
 
     #[test]
     fn create_item_with_form_with_complete_data() {
         let complete_data = format!("name={}&done={}", "alice", "true");
-        let client = Client::new(rocketeer()).expect("rocketeer");
-        let mut response = client.post("/create-item-with-form")
+        let client = Client::tracked(rocket()).expect("rocket");
+        let response = client.post("/create-item-with-form")
         .header(ContentType::Form)
         .body(complete_data)
         .dispatch();
         assert_eq!(response.status(), Status::Ok);
         assert_eq!(response.content_type(), Some(ContentType::Plain));
-        assert_eq!(response.body_string(), Some("Create item with form... name:alice done:true".into()));
+        assert_eq!(response.into_string(), Some("Create item with form... name:alice done:true".into()));
     }
 
     #[test]
     fn create_item_with_form_with_incomplete_data() {
         let incomplete_data = format!("done={}", "true");
-        let client = Client::new(rocketeer()).expect("rocketeer");
+        let client = Client::tracked(rocket()).expect("rocket");
         let response = client.post("/create-item-with-form")
         .header(ContentType::Form)
         .body(incomplete_data)

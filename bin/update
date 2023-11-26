@@ -1,7 +1,6 @@
 #!/bin/sh
-rustup default nightly
+rustup default stable
 rustup update
 cargo update
 cargo build
 cargo test
-
