@@ -297,15 +297,15 @@ Setup:
 * [Environment variable file .env.example](.env.example)
 * [Git ignore file .gitignore](.gitignore)
 * [Install sccache (Shared Compilation Cache)](doc/install-sccache/)
-* [Install diesel_cli (Diesel Command Line Interface](doc/install-diesel-cli/)
+* [Install diesel_cli (Diesel Command Line Interface)](doc/install-diesel-cli/)
 
 Demos as source code:
 
-* <src/demos/static_route.rs>: Static route "/hello"
-* <src/demos/dynamic_route.rs>: Dynamic route "/echo"
-* <src/demos/method_routes.rs>: Method routes "/users" with GET, PUT, POST, PATCH, HEAD, etc.
-* <src/demos/form.rs>: Form demo
-* <src/demos/upload.rs>: Upload demo
+* [static_route.rs](src/demos/static_route.rs): Static route "/hello"
+* [dynamic_route.rs](dynamic_route.rs): Dynamic route "/echo"
+* [method_routes.rs](src/demos/method_routes.rs): Method routes "/users" with GET, PUT, POST, PATCH, HEAD, etc.
+* [form.rs](src/demos/form.rs): Form demo
+* [upload.rs](src/demos/upload.rs): Upload demo
 
 Capabilities:
 
@@ -316,4 +316,3 @@ Capabilities:
 * [Static files with path segments](doc/static-files-with-path-segments/)
 * [Static files with a file server](doc/static-files-with-a-file-server/)
 * [Templates](doc/templates/)
-  
