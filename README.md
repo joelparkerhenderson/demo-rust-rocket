@@ -24,6 +24,8 @@ This demo is a quick start of the most-important areas for the projects we build
   
 * Testing with system tests.
   
+Feedback welcome.
+
 
 ## Create app
 
