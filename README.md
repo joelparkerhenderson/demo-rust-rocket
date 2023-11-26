@@ -6,27 +6,38 @@ This is a demonstration of:
 
 * The Rocket 0.5 web framework
 
-This demo is a quick start of the most-important areas for the projects we build:
-  
-* Setup with Rocket.toml, .env.example, and .gitignore
-
-* Static file responses per file, and with path segments, and with a file server.
-
-* HTTP REST method routes for GET, PUT, POST, PATCH, HEAD, OPTIONS.
-
-* JSON request and response.
-
-* SQLite databases with sqlx and the new Rocket database connection pool.
-
-* Templates with Tera.
-
-* Cookies and the new Rocket Cookie Jar.
-  
-* Testing with system tests.
-
-This demo focuses on simple code to get a sense of Rocket. This demo is not intended to be a production-ready application, and is not intended to cover all Rocket capabilities. For that, see the Rocket documentation.
+This demo is a quick start of the most-important areas for the projects we build. This demo is not intended to be a production-ready application, and is not intended to cover all Rocket capabilities. For that, see the Rocket documentation.
 
 Feedback welcome.
+
+
+## Contents
+
+Setup:
+
+* [Rocket.toml configuration file](doc/rocket-toml-configuration-file/)
+* [Environment variable file .env.example](.env.example)
+* [Git ignore file .gitignore](.gitignore)
+* [Install sccache (Shared Compilation Cache)](doc/install-sccache/)
+* [Install diesel_cli (Diesel Command Line Interface)](doc/install-diesel-cli/)
+
+Demos as source code:
+
+* [static_route.rs](src/demos/static_route.rs): Static route "/hello"
+* [dynamic_route.rs](dynamic_route.rs): Dynamic route "/echo"
+* [method_routes.rs](src/demos/method_routes.rs): Method routes for HTTP GET, PUT, POST, PATCH, HEAD, OPTIONS
+* [form.rs](src/demos/form.rs): Form demo
+* [upload.rs](src/demos/upload.rs): Upload demo
+
+Capabilities:
+
+* [Cookies and CookieJar](doc/cookies-and-cookie-jar/)
+* [Databases](doc/databases/) using SQLite, sqlx, and a connection pool
+* [JSON](doc/json/) request and response.
+* [Static file](doc/static-file/)
+* [Static files with path segments](doc/static-files-with-path-segments/)
+* [Static files with a file server](doc/static-files-with-a-file-server/)
+* [Templates](doc/templates/) with Tera templating engine
 
 
 ## Create app
@@ -288,31 +299,3 @@ rocket_db_pools = { version = "0.1.0", features = ["sqlx_sqlite"] }
 serde = { version = "1.0", features = ["derive"] }
 ```
 
-
-## Documentation
-
-Setup:
-
-* [Rocket.toml configuration file](doc/rocket-toml-configuration-file/)
-* [Environment variable file .env.example](.env.example)
-* [Git ignore file .gitignore](.gitignore)
-* [Install sccache (Shared Compilation Cache)](doc/install-sccache/)
-* [Install diesel_cli (Diesel Command Line Interface)](doc/install-diesel-cli/)
-
-Demos as source code:
-
-* [static_route.rs](src/demos/static_route.rs): Static route "/hello"
-* [dynamic_route.rs](dynamic_route.rs): Dynamic route "/echo"
-* [method_routes.rs](src/demos/method_routes.rs): Method routes "/users" with GET, PUT, POST, PATCH, HEAD, etc.
-* [form.rs](src/demos/form.rs): Form demo
-* [upload.rs](src/demos/upload.rs): Upload demo
-
-Capabilities:
-
-* [Cookies and CookieJar](doc/cookies-and-cookie-jar/)
-* [Databases](doc/databases/)
-* [JSON](doc/json/)
-* [Static file](doc/static-file/)
-* [Static files with path segments](doc/static-files-with-path-segments/)
-* [Static files with a file server](doc/static-files-with-a-file-server/)
-* [Templates](doc/templates/)
