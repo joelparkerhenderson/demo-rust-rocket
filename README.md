@@ -23,7 +23,9 @@ This demo is a quick start of the most-important areas for the projects we build
 * Cookies and the new Rocket Cookie Jar.
   
 * Testing with system tests.
-  
+
+This demo focuses on simple code to get a sense of Rocket. This demo is not intended to be a production-ready application, and is not intended to cover all Rocket capabilities. For that, see the Rocket documentation.
+
 Feedback welcome.
 
 
