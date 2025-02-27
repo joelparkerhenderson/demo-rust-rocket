@@ -20,7 +20,7 @@ categories = ["web-programming"]
 
 ### Dependencies for this demo_rust_rocket program
 
-rocket = { version = "0.5.0", features = ["http2", "json", "msgpack", "uuid", "secrets", "tls", "mtls"] }
+rocket = { version = "0.5.1", features = ["http2", "json", "msgpack", "uuid", "secrets", "tls", "mtls"] }
 rocket_dyn_templates = { version = "0.1.0", features = ["handlebars", "tera"] }
 rocket_sync_db_pools = "*"
 rocket_db_pools = { version = "0.1.0", features = ["sqlx_sqlite"] }
@@ -36,9 +36,9 @@ rocket_db_pools = { version = "0.1.0", features = ["sqlx_sqlite"] }
 # so it is prudent to define each version to be greater-than a version,
 # or even better, to pin to specific versions.
 #
-serde = { version = "^1.0.103", features = ["derive"] }
-serde_derive = "^1.0.103"
-serde_json = "^1.0.44"
+serde = { version = "^1.0.210", features = ["derive"] }
+serde_derive = "^1.0.210"
+serde_json = "^1.0.132"
 
 ### Other dependencies that we like to use with many of our Rocket programs
 
